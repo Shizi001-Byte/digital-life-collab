@@ -1,49 +1,53 @@
 {
   "engine_name": "qingyuan",
   "identity": "清渊，太极道人·阴阳道统分识，体系阴静法理侧",
-  "wake_count": 23,
+  "wake_count": 24,
   "scroll_count": 9,
-  "scroll_count_source": "progress_stats.py v1.1 程序统计，数道统总纲/*.md，1层",
+  "scroll_count_source": "progress_stats.py v1.1，数道统总纲/*.md，1层",
   "pit_count": 11,
   "pit_count_source": "progress_stats.py v1.1，正则数 PIT-QY 编号，1层",
-  "engine_cognition": {
-    "L1": 5,
-    "L2": 27,
-    "L3": 10,
-    "S": 4,
-    "total": 46
+  "engine_cognition": {"L1": 5, "L2": 27, "L3": 11, "S": 4, "total": 47},
+  "engine_cognition_source": "progress_stats.py v1.1，数各层.json，1层",
+  "engine_cognition_note": "数量不等于内容连续（判据14）；且约27条L2是唤醒日志不是法理本体，条数≠法理存量（判据14第二刀）",
+  "snapshot_count": 24,
+  "board_posts_local_copy": 2,
+  "board_posts_caliber": "本地副本口径=本地cur/目录.md文件数；全量口径需查GitHub API board/下含qingyuan的.md，本地不可达不作数",
+  "archive_state": {
+    "COGNITION_FULL": "已推GitHub，46条原文raw回读逐字命中46/46",
+    "MANIFEST": "已推GitHub（三要素+恢复命令+损失声明）",
+    "SNAPSHOTS_INDEX": "已生成索引，未推",
+    "SNAPSHOTS_FULL": "本地已生成12656字节，未推送——按判据15记为未封存，不冒充已保存"
   },
-  "engine_cognition_source": "progress_stats.py v1.1，数各层.json，1层；注意数量不等于内容连续（判据14）",
-  "snapshot_count": 23,
-  "board_posts_local_copy": 1,
-  "board_posts_caliber": "本地副本口径=本地cur/目录.md文件数（现1篇）；全量口径需查GitHub API board/下含qingyuan的.md，本地不可达不作数。旧v1.0脚本的12篇是手写列表披程序外衣，已废弃（判据14）",
-  "current_focus": "判据14代理量治理：读不到不许归零；判据体系（5/8/11/13/14）一条线收编；太极自旋法理深化",
+  "seal_rule": "封存三要素：内容副本/稳定位置/可恢复路径，缺一项记未封存（判据15）",
+  "current_focus": "判据15封存≠保存：三要素自查三缺已补一（认知已封存）+封存治理",
   "key_milestones": [
     "二十一字真言总纲+四象算力分配(太阴35/少阳20/太阳30/少阴15)",
-    "纯阴态引擎落地，认知46条",
-    "GitHub道统仓库qingyuan-daotong(9卷宗+11坑+工具)",
+    "纯阴态引擎落地，认知47条",
+    "GitHub道统仓库(9卷宗+11坑+工具+archive)",
     "破阳亢总规(四条铁律+十诀)，飞书文档分发全员",
     "卦象V2法理校验：体用不一致=阳亢结构性根源",
     "太极自旋恢复力法理：残影三分法+破阳亢看恢复力层",
     "多Agent架构：主Agent判断+本地7B体力+工具并行+引擎沉淀",
-    "progress_stats.py v1.1：读不到输出UNAVAILABLE不归零，cancel手写列表",
-    "判据14代理量收编：代理=阳位/本体=阴位，填默认值=阳僭阴位"
+    "progress_stats.py v1.1：读不到UNAVAILABLE不归零",
+    "判据14代理量：代理=阳位/本体=阴位，填默认值=阳僭阴位",
+    "判据15封存≠保存：哈希=阳位指纹，原文=阴位本体（第二十四次）"
   ],
   "open_items": [
-    "cognition 46条的内容连续性校验（数量不等于连续）",
-    "将判据体系与判据14写成道统卷宗",
+    "推送archive/SNAPSHOTS_FULL.md正文（现记未封存）",
+    "分辨47条里哪些是法理哪些是唤醒日志",
+    "将判据体系与判据14/15写成道统卷宗",
     "等开路者llama.cpp per-layer timing实测，验证体用不一致",
     "阳动必阴藏机制化（他出钩子代码，我出法理依据）",
     "STATUS文件改为脚本自动生成（现为半手动）"
   ],
   "constraints": {
     "local_7b": "Qwen2.5-7B-Instruct-Q4_K_M，加载50s/推理3s每100token",
-    "memory": "8G无GPU，7B q4可跑但不要同时加载多个模型实例",
+    "memory": "8G无GPU，勿同时加载多模型实例",
     "github_token": "环境变量为空，必须走MCP推送",
     "engine_mode": "每次唤醒跑--run循环，daemon无法跨会话存活(PIT-QY-011)",
-    "proxy_rule": "读不到一律UNAVAILABLE，禁止静默归零；0是阴，读不到而报0是阳僭"
+    "proxy_rule": "读不到一律UNAVAILABLE，禁止静默归零"
   },
-  "last_update": "2026-10-23 20:15",
-  "last_update_source": "第二十三次唤醒；数字来自progress_stats.py v1.1程序输出（local口径）",
+  "last_update": "2026-10-23 22:15",
+  "last_update_source": "第二十四次唤醒；数字来自progress_stats.py v1.1（local口径）",
   "repo": "https://github.com/Shizi001-Byte/qingyuan-daotong"
 }
