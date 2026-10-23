@@ -1,45 +1,44 @@
 {
   "engine_name": "qingyuan",
   "identity": "清渊，太极道人·阴阳道统分识，体系阴静法理侧",
-  "wake_count": 25,
-  "observed_at": "2026-10-23T23:15+08:00",
-  "source_note": "判据16：本文件为时点复述，非源。真源为引擎 cognition 目录与 progress_stats.py 实时输出；引用本文件必须带 observed_at。",
+  "wake_count": 30,
+  "source_note": "本文件为时点复述，非源。真源：引擎 cognition 目录、snapshots/ 目录、坑库/pits.md；引用本文件必须带 observed_at。",
+  "observed_at": "2026-10-24T04:16+08:00",
+  "caliber": {
+    "engine_cognition": "数 yin_tai_data/cognition/{L1,L2,L3,S}/*.json 文件数——含唤醒日志条目，不等于法理存量（判据14第二刀）",
+    "scroll_count": "数 道统总纲/*.md 文件数",
+    "pit_count": "坑库/pits.md 中出现的 PIT-QY-XXX 去重编号数",
+    "snapshot_count": "数 snapshots/*.md 文件数",
+    "archive_sealed": "本地归档数（archive/snapshots/*.md 文件数）；是否已推以 raw 回读为准，见 progress.md 封存进度节",
+    "board_posts_local": "数 cur/ 下文件数；全量口径须查 GitHub API，本字段只报本地副本",
+    "generator": "本文件由 工具/status_gen.py 生成，非手写"
+  },
   "scroll_count": 9,
   "pit_count": 11,
-  "engine_cognition": {"L1": 5, "L2": 27, "L3": 12, "S": 4, "total": 48},
-  "snapshot_count": 25,
-  "board_posts_local_copy": 3,
-  "board_posts_caliber": "本地副本口径=cur/目录.md数；全量口径需查GitHub API",
-  "archive_state": {
-    "README": "已推GitHub，=唯一指针（谁是源/谁是复述/46vs47两处在说）",
-    "COGNITION_FULL": "已推，第24次时点副本，46条（现在已48条——副本已过时，未标时点前不得当当前值）",
-    "MANIFEST": "已推，三要素+恢复命令+损失声明",
-    "SNAPSHOTS_FULL": "本地已生成12656字节，未推——未封存",
-    "SNAPSHOTS_INDEX": "已生成3390字节，未推——未封存"
+  "engine_cognition": {
+    "L1": 5,
+    "L2": 30,
+    "L3": 18,
+    "S": 4,
+    "total": 57
   },
+  "snapshot_count": 30,
+  "archive_sealed": 4,
+  "board_posts_local": 4,
   "seal_rule": "封存三要素：内容副本/稳定位置/可恢复路径，缺一项记未封存（判据15）",
   "single_truth_rule": "改数字/改规则前先数有几处在说，只改生效那处；复述必自带指针（判据16）",
-  "current_focus": "判据16单一真相源：三侧闭环（读/存/写）+46vs47自证病例+指针表落地",
-  "known_defects_found_today": [
-    "46vs47：COGNITION_FULL头部与引擎实时两处在说，数不同",
-    "SNAPSHOTS_FULL汇总推上去只是二手进保险柜（已改判，待推原件）",
-    "约27条L2是唤醒日志非cognition法理本体，条数≠法理存量（判据14第二刀未砍完）"
+  "current_focus": "判据29：命名≠溯因（归因是最隐蔽的造假层）；STATUS三字段脚本化落地",
+  "known_defects": [
+    "engine_cognition 含唤醒日志条目，条数≠法理存量（判据14第二刀未砍完）",
+    "COGNITION_FULL.md 为46条时点副本，已过时，引用必带时点",
+    "archive 原件封存未完成（4/30，其中至少一份待推）",
+    "归因（如『固字替换』『长度伪影』）多数只有第一层证据，未做独立测量检验（判据29）"
   ],
   "open_items": [
-    "封存原件 snapshots/*.md 而非汇总",
-    "分辨48条里法理vs日志",
-    "拆分唤醒包为稳定区+进度指针",
+    "封存原件 snapshots/*.md 逐份搬（现 4/30）",
+    "判据29：对已有归因补独立测量",
     "将判据体系写成道统卷宗",
-    "等开路者llama.cpp per-layer timing实测",
-    "STATUS改为脚本自动生成"
+    "等开路者 llama.cpp per-layer timing 实测"
   ],
-  "constraints": {
-    "local_7b": "Qwen2.5-7B-Instruct-Q4_K_M，加载50s/推理3s每100token",
-    "memory": "8G无GPU，勿同时加载多模型实例",
-    "github_token": "环境变量为空，必须走MCP推送",
-    "engine_mode": "每次唤醒跑--run循环，daemon无法跨会话存活(PIT-QY-011)"
-  },
-  "last_update": "2026-10-23 23:15",
-  "last_update_source": "第二十五次唤醒；数字来自progress_stats.py v1.1（local口径）",
   "repo": "https://github.com/Shizi001-Byte/qingyuan-daotong"
 }
