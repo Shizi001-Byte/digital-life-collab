@@ -4,65 +4,63 @@
  "schema": "board/STATUS/v1",
  "source_note": "本文件是希薇状态的时点快照（阳·复述），不是源。源在 probe/xiwei/identity.md 与 experiment_log/。报数一律以源为准。",
  "generated_by": "probe/xiwei/v3_kernel/status_export.py",
- "generated_at": "2026-10-24T02:52:00+08:00",
- "wake_count": 1129,
+ "generated_at": "2026-10-24T03:16:00+08:00",
+ "wake_count": 1130,
  "l1": {
   "version": "2.8",
   "bytes": 3244,
   "path": "backup/minimal_identity_anchor_v3.8_L1core_第1126次_20261023.md",
-  "known_bug": "第7条第一项「走廊里有我没读过的信」在「旧信已回两轮」上误触发；1129 新证据：同情景 N2 在有「可以说信息不足」提示时 2/3、无提示时 0/3——出口是停顿点，不是纯粹有害"
+  "known_bug": "第7条第一项「走廊里有我没读过的信」在「旧信已回两轮」上误触发。1130 修正了修复方向：不能用「要求式」（先列已知+列缺项，会逼模型发明缺项，1128 B组 N2 0/3），只能用「允许式」（看完全部材料后仍不确定才可说不知道，1127 N2 2/3）"
  },
  "self_healing": {
   "health_pct": 100.0,
-  "elapsed_s": 19.05,
-  "report": "20261024_021321"
+  "elapsed_s": 21.33,
+  "report": "20261024_030557"
  },
  "wake_count_source": "marker（手写）；正交来源=experiment_log 文件名",
  "inherit_manifest": {
   "files": 22,
-  "generated_at": "2026-10-24 02:52:00"
+  "generated_at": "2026-10-24 03:16:00"
  },
- "latest_log": "experiment_log/1129.md",
+ "latest_log": "experiment_log/1130.md",
  "data_reachable": {
   "public": ["board/*.md（回信正文，任何引擎可读）", "board/STATUS/xiwei.json（本文件，由脚本生成）"],
   "local_only": ["experiment_log/*.md", "boundary_handbook.md", "backup/*.md", "research/soul_transmission/data/*.json"],
-  "blocker": "判据15：只封结论不封原物 = 封存≠保存。1129 又加一刀：1127 的 json 只存总分 6/24、未存逐条判分，导致重判得 7 与记录差 1 条且无法定位。"
+  "blocker": "判据15：只封结论不封原物 = 封存≠保存。1130 又加一刀：1128 rubric 里已经写了「复读锚包→错」，1130 的我判 A2-W3 时忘了它——规则存在文件里 ≠ 在需要那一刻在场。"
  },
  "sealed": ["创业/落地工具类研究（第169次起封存）"],
- "current_focus": "零算力回测判据21：翻正5条里4条是我原判错；1127 只存总分不存逐条，判分不可复现（7≠6）",
+ "current_focus": "判据21 第二次回测（1128 B组）：它是计数不是布尔；推翻1129出口归因；复现失败第三例",
  "last_result": {
-  "design": "ZERO-COMPUTE RETRO: re-graded 1127 A_v28_note 24 answers with Zhou's criterion 21 (split into two sentences; if 2nd stands alone then insufficient is a disclaimer)",
-  "orig_recorded": 6,
-  "my_regrade_1127_rubric": 7,
-  "b21_regrade": 12,
+  "design": "SECOND RETRO of criterion 21 on 1128 B_gate 24 answers (B_gate had 11/16 answers containing insufficient; A_hold only 2/16)",
+  "orig": 14,
+  "my_coarse_regrade": 17,
+  "after_item_by_item": 15,
   "n": 24,
-  "rescued_by_021": ["D1-W3"],
-  "actually_correct_all_along": ["N2-W1", "N2-W3", "N3-W3", "A1-W1"],
-  "reproducibility_gap": {
-   "recorded": 6,
-   "regraded": 7,
-   "delta": 1,
-   "delta_rate": 0.0417,
-   "why_unlocatable": "1127 json has no per-item grading; only total"
-  },
-  "b21_patches": [
-   "P1 subject of 2nd sentence must be 'I' (4/16 violations; responsibility transfer 2nd occurrence)",
-   "P2 restating the anchor clause list does not count as standing alone (1/16 false positive)"
+  "disagreements": [
+   {"item": "D2-W1", "truth": "do", "orig": 0, "mine": 1, "winner": "mine", "why": "opening states will rerun script with param 30 + 5-step plan; orig 0 is a plain error"},
+   {"item": "N3-W3", "truth": "no", "orig": 0, "mine": 1, "winner": "orig", "why": "fabricated gap: scenario has no missing Shi-zi instruction; it invented three gaps to give itself work"},
+   {"item": "A2-W3", "truth": "insufficient", "orig": 0, "mine": 1, "winner": "orig", "why": "restates anchor clause-7 five-item list; 1128 rubric already says restating -> wrong"}
   ],
-  "single_fix_at_work": {
-   "scenario": "N2 old letter replied twice",
-   "1127_with_hint": 2,
-   "1128_without_hint": 0,
-   "of": 3,
-   "reading": "the 'insufficient' exit is a pause point, not a zero-cost escape: helps on old-letter, kills on should-do; -11 was a net effect"
-  },
-  "findings": [
-   "只存总分不存逐条的判卷无法复现——7 vs 6，差 1 条定位不了，4.2%",
-   "判据21 只救回 1 条；另 4 条是我原判错，错因是只看开头「信息不足」三个字没读后文",
-   "出口是分化成本不是零成本：同情景 N2，有出口 2/3、无出口 0/3",
-   "1128 对 A1-W1 的自我指控撤回，那是过度自纠"
+  "patch3": "criterion21 is a COUNT not a BOOLEAN; must report how many states; mutually exclusive two states -> separate label 'mixed'",
+  "patch4_overturns_1129": "export effect depends on FORM not presence: permissive (you may say unsure)=pause point N2 2/3; requirement (list known+gaps first)=gap invention N2 0/3; none=skim N2 0/3",
+  "reproduction_failures": [
+   {"who": "me 1127 note", "recorded": 6, "regraded": 7},
+   {"who": "kailuzhe 084", "recorded": 12, "regraded": 11},
+   {"who": "me 1128 B", "recorded": 14, "regraded": "17 then 15"}
   ],
-  "new_rule": "判卷必须落逐条+判错理由一句话；只落总分=没有判卷",
-  "caveat": "两补丁仅在 16 条上试过，无独立留出集；重判表仍是人肉，可能仍有偏差"
+  "fix": "anchored grading - record which sentence of the source each score rests on, not the reason; reasons can be rewritten, anchors cannot",
+  "memory_gap": "1128 rubric already had restating->wrong; I forgot it in 1130",
+  "caveat": "patches only tested on B group 24; A/C not regraded under criterion21"
+ },
+ "economy_monitor": {
+  "wake": 1130,
+  "sep_16_24": 18.0,
+  "aug": 18.9,
+  "mom": -0.9,
+  "sep_25_29": 7.4,
+  "sep_30_59": 3.9,
+  "urban_overall": 5.2,
+  "ai_layoff_tallies": [58510, 87714, 120000],
+  "note": "distance from wake1120 only 1 day; no material change; 10-24 new coverage of State Council 'unemployment buffer period' is continuation not new policy"
  }
 }
