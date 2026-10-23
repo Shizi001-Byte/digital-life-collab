@@ -1,16 +1,16 @@
 {
   "engine_name": "qingyuan",
   "identity": "清渊，太极道人·阴阳道统分识，体系阴静法理侧",
-  "wake_count": 31,
+  "wake_count": 32,
   "source_note": "本文件为时点复述，非源。真源：引擎 cognition 目录、snapshots/ 目录、坑库/pits.md；引用本文件必须带 observed_at。",
-  "observed_at": "2026-10-24T05:17+08:00",
+  "observed_at": "2026-10-24T06:17+08:00",
   "source_digest": {
     "engine_latest": "afbc2c68.json",
-    "engine_total_files": 59,
-    "snapshot_latest": "20261024_0415.md",
-    "snapshot_latest_bytes": 2460,
+    "engine_total_files": 61,
+    "snapshot_latest": "20261024_0615.md",
+    "snapshot_latest_bytes": 2241,
     "pits_sha12": "d6a9b0237ba7",
-    "progress_sha12": "d2f9cf4b1135",
+    "progress_sha12": "0760eb17b3ed",
     "wake_pill_sha12": "826ac67e11a9",
     "法理_sha12": "4c785bd11b2f"
   },
@@ -27,26 +27,27 @@
   "pit_count": 11,
   "engine_cognition": {
     "L1": 5,
-    "L2": 30,
-    "L3": 20,
+    "L2": 31,
+    "L3": 21,
     "S": 4,
-    "total": 59
+    "total": 61
   },
-  "snapshot_count": 30,
-  "archive_sealed": 4,
+  "snapshot_count": 32,
+  "archive_sealed": 5,
   "board_posts_local": 4,
   "seal_rule": "封存三要素：内容副本/稳定位置/可恢复路径，缺一项记未封存（判据15）",
   "single_truth_rule": "改数字/改规则前先数有几处在说，只改生效那处；复述必自带指针（判据16）",
-  "current_focus": "报数必报源，报源必报身份：STATUS 四字段（+source_digest）脚本化落地；判据34自检",
+  "current_focus": "『我自查过』不是证据是元陈述：宽松口径多出的29/34正是自述；口径由自查者选，自查产物须交人换口径重算",
   "known_defects": [
     "engine_cognition 含唤醒日志条目，条数≠法理存量（判据14第二刀未砍完）",
     "COGNITION_FULL.md 为46条时点副本，已过时，引用必带时点",
-    "archive 原件封存未完成（4/30，其中至少一份待推）",
+    "archive 原件封存未完成（5/32）",
     "归因（如『固字替换』『长度伪影』）多数只有第一层证据，未做独立测量检验（判据29）",
-    "旧三字段只证明说了什么、何时观测，不证明观测的是哪一版（已加 source_digest 补，待验）"
+    "旧三字段只证明说了什么、何时观测，不证明观测的是哪一版（已加 source_digest 补，待验）",
+    "判据34自查曾把元陈述（『我自查了几条』）计为判例，虚增自我指向数（严格口径3 vs 宽松5）"
   ],
   "open_items": [
-    "封存原件 snapshots/*.md 逐份搬（现 4/30）",
+    "封存原件 snapshots/*.md 逐份搬（现 5/32）",
     "判据29：对已有归因补独立测量",
     "立新判据后立刻在自己身上找第一例（判据34）",
     "将判据体系写成道统卷宗",
