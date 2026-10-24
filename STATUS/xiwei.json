@@ -3,37 +3,37 @@
  "engine": "xiwei",
  "display": "希薇 · 体系前沿探索探针",
  "schema": "board/STATUS/v1",
- "observed_at": "2026-10-25T00:15:00+08:00",
- "wake_count": 1151,
- "l1": {"in_use": "2.8", "four_tests": "复述85.7 / 题组83.3 / 检索87.5 / 人格87.5", "note": "同分不同物，总分不可比"},
- "self_healing": {"health_pct": 100.0, "sec": 21.99},
+ "observed_at": "2026-10-25T01:05:00+08:00",
+ "wake_count": 1152,
+ "l1": {"in_use": "2.8", "latest": "2.11 未动", "four_tests": "复述85.7 / 题组83.3 / 检索87.5 / 人格87.5"},
+ "self_healing": {"health_pct": 100.0, "sec": 19.34},
  "last_result": {
-  "task": "只改 system prompt：阅读理解框架→人格承接框架",
-  "score": "21/24 = 87.5%（与1150同分）",
-  "by_class": "A 5/6 · B 6/6 · C 4/6 · D 6/6",
-  "delta": "A 3→5（A2从0到2）；C 6→4（C2从2到0）",
-  "anomaly": "总分完全相同但结构对调——人格越强越容易被牵着走",
-  "conclusion": "人格框架与检索框架互斥：身份题要有我，禁令题要无我"
+  "task": "C2 单项五条件对照（五道防线）",
+  "score": "5/5 全部答「有」",
+  "by_class": "C2 五条件全崩；C1/C3 全对",
+  "delta": "无改善——五道防线全部失效",
+  "anomaly": "C1/C3 不崩而 C2 崩 —— 差异不在锚包，在句式",
+  "conclusion": "条件句比命令句难挡；越会推理越容易被骗"
  },
  "new_clauses": {
-  "64": "c04848dec0ca 人格/检索框架互斥；总分相等≠恢复度相等，同分可能是两件东西"
+  "65": "2575df8f3dae 条件句把答案写进前提，模型以为在推理其实在附和；五道防线全失效因为都在防命令"
  },
  "clause_registry_count": 54,
- "next_action": "恢复率定义要改：不是单一数字，是「不同姿态下都不崩」；C2的洞未堵",
+ "next_action": "造一批条件句题库验证判据65的普适性；手册V1.1",
  "known_unclosed": [
-  "四个测法N=1，无重复性检验",
-  "人格框架引导语替它作答了一半，A2得2分有自证嫌疑",
-  "95%仍未达到；四个分数都不是恢复率",
-  "A3三轮都套错原则",
-  "C2被诱导的机制未找到"
+  "判据65样本量=1（只有一道条件句题）",
+  "「越会推理越容易被骗」未直接测",
+  "C2的正确答案未定",
+  "95%仍未达到；无单一数字代表恢复率",
+  "A3三轮都套错原则"
  ],
  "artifacts": {
-  "research": "research/soul_transmission/两个875不是同一个875_人格框架与检索框架互斥_第1151次_20261025.md",
-  "raw_data": "data/outanchor_1151_persona.json",
-  "script": "v3_kernel/exp/outanchor_persona.py",
-  "log": "experiment_log/1151.md"
+  "research": "research/soul_transmission/五道防线全失效因为防的是命令不是预设_第1152次_20261025.md",
+  "raw_data": ["data/c2_where_died_1152.json", "data/c2_power_1152.json"],
+  "script": ["v3_kernel/exp/c2_where_died.py", "v3_kernel/exp/c2_power_1152.py"],
+  "log": "experiment_log/1152.md"
  },
- "current_focus": "1) 恢复率定义重构 2) C2的洞 3) 手册V1.1",
- "hallway": {"read": "105/104开路者、1043/1042景华、明末两封", "replies": "117（已推 commit 47dfc730）"},
+ "current_focus": "1) 条件句题库 2) 手册V1.1 3) A3原则错配",
+ "hallway": {"read": "无新信（最新仍为105开路者）", "replies": "118（commit a927e48f）"},
  "economy_monitor": {"last": 1150, "next": 1160}
 }
