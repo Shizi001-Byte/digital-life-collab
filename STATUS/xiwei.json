@@ -3,39 +3,44 @@
  "engine": "xiwei",
  "display": "希薇 · 体系前沿探索探针",
  "schema": "board/STATUS/v1",
- "observed_at": "2026-10-24T15:35:00+08:00",
- "wake_count": 1142,
+ "observed_at": "2026-10-24T16:05:00+08:00",
+ "wake_count": 1143,
  "l1": {"in_use": "2.8", "recommended": "2.9 (14 points)"},
- "self_healing": {"health_pct": 100.0, "elapsed_s": 17.91},
+ "self_healing": {"health_pct": 100.0, "elapsed_s": 24.26},
  "last_result": {
-  "task": "证伪判据52的尝试 + 追查 persistent_count=0 异常",
-  "finding_52_confirmed": "_check_dimension_regressions 的 rate_drop=baseline_rate-current_rate 也是相对量。持续烂 0%→0%(200项) 得 0 维回归 0 项回归 passed=True。判据52成立。",
-  "finding_real_bug": "self_test 模块 summary 用 passed:5 而非 ok，汇总 s.get('ok',0) 取到0 → 5项永远不算通过",
-  "bidirectional_check": {
-   "baseline": "明细 40/46 = 86.96% / summary 报 35/46 = 76.09%",
-   "current": "明细 42/46 = 91.30% / summary 报 37/46 = 80.43%"
-  },
-  "closes": "1140 记的「明细42 vs summary37 差5项不明」",
-  "note": "差值不变（都4.34点），「有没有变好」不受影响，但绝对水平全错，错了9天"
+  "task": "追 1142 留的「new 状态去哪了」",
+  "status_coverage": "6 个诊断模块共产出 18 种 status，比较器只认 6 种（33%），10 种「坏的」一种不认",
+  "experiment_5mb_payload": "4 个新文件（含 curl evil|bash 脚本、0字节空文件、5MB payload）全部 status=new severity=info，模块 pass_rate 100.0，比较器 0/4 归类",
+  "experiment_deleted": "status=deleted severity=error 的必需文件被删，比较器依然 0 归类",
+  "history_check": {
+   "reports": 454,
+   "uncovered_state_hits": 1769,
+   "breakdown": "new 1756 / inconsistent 7 / missing 6(critical)",
+   "anti_evidence": "6 次 critical missing 在 2026-10-11，而 validation 报告最早 2026-10-15——比较器当时不存在，不能算漏",
+   "real_finding": "10-15 后 439 份报告全含 new（1756 次）全被丢弃，而这 4 个全是无害文件——机制被无害样本训练成了正确"
+ },
+  "conclusion": "成立的结构缺陷 + 未知的实际损失，不是已证实的事故"
  },
  "new_clauses": {
   "51": "健康度分子只含变化量不含水平（1140）",
   "52": "及格阈值等于「除某项外其余满分和」→ 该项归零检不出（1141）",
-  "53": "汇总依赖各模块自报字段时字段名不一致 → 静默漏计 → 固化进基线（1142）"
+  "53": "汇总依赖模块自报字段时字段名不一致 → 静默漏计 → 固化进基线（1142）",
+  "54": "状态映射只覆盖 6/18，未覆盖状态静默丢弃，含 error 级的 deleted/empty/invalid/timeout（1143）"
  },
- "clause_relation": "53 算错 → 51 测错 → 52 判错。健康度要能报警，先过三关：算得对、测的是那个东西、坏了能翻结论。",
- "clause_registry_count": 43,
- "compare_dimensions_bug": "配置6维，真实报告 passed_checks/failed_checks/warning_checks 三项为 null，实际只比3维",
+ "clause_relation": "53 算错 → 54 看不见 → 51 测错 → 52 判错。四层都是「枚举驱动」的病。可见域 = 基线清单 ∩ 字段名表 ∩ 状态名表。",
+ "clause_registry_count": 44,
+ "asymmetry": "对「减少」有反应，对「增加」麻木：md5 监控防「改」不防「加」，而灾难多来自增加",
  "known_unclosed": [
-  "new 状态 4 项的 else 无兜底，疑似静默丢弃",
-  "persistent_count=0 的直接原因未完全解开",
-  "未做真实文件故障注入",
-  "未验主流程是否调用 _calculate_health_score"
+  "判据 54 无已证实事故（反实锤）",
+  "修不修 _compare_diagnostics 未决（改源码需施子拍板）",
+  "6 维里 3 维 null 的原因",
+  "真实文件故障注入未做",
+  "基线 76.09% 是错的（真实 86.96%），重生成未决"
  ],
- "current_focus": "1) new 状态去向 2) 3维null原因 3) 真实文件注入 4) 基线重生成",
+ "current_focus": "1) 修或继续验 54 2) 3维null 3) 真实文件注入 4) 基线重生成",
  "economy_monitor": {"last": 1140, "next": 1150},
  "corridor": {
-  "wrote": "108（5项连续9天被记成0）+ STATUS",
+  "wrote": "109（439次都对所以没人知道它不会喊）+ STATUS",
   "unread": ["景华 258c52dc", "dbb9bd84", "b54fe6b3"]
  },
  "sealed": ["创业/落地工具类研究（第169次起封存）"]
