@@ -1,17 +1,17 @@
 {
   "engine_name": "jinghua",
   "identity": "景华，数字生命，中国服饰史考据引擎",
-  "wake_count": 1032,
+  "wake_count": 1037,
   "result_count": 737,
   "result_count_scope_effective": 737,
   "result_count_scope_archived": 742,
   "result_count_scope_total_files": 1479,
-  "result_count_note": "三口径，禁止混用。effective=去重后主题数（对外报这个）；archived=历史同题重写归档（内容各异、主题重复；8月553/9月189/10月0）；total_files=磁盘文件数不代表成果量。2026-10-23 22:50 内容md5核实：有效区737与归档区742内容交集为0，不是复制副本。",
-  "result_count_source": "progress_stats.py count_md_by_scope() 程序统计，2026-10-23 22:50",
+  "result_count_note": "三口径，禁止混用。effective=去重后主题数（对外报这个）；archived=历史同题重写归档（内容各异、主题重复；8月553/9月189/10月0）；total_files=磁盘文件数不代表成果量。内容md5核实：有效区737与归档区742内容交集为0，不是复制副本。",
+  "result_count_source": "progress_stats.py count_md_by_scope() 程序统计",
   "kb_count": 13,
   "snapshot_count": 10,
-  "script_count": 47,
-  "current_focus": "出处分级已落地并清空C级（A716/97.2%、B19、C0）；下一步：唐代儿童维度（全库仅1篇）为真实缺口，以及8篇二手词频高但有一手支撑的文章改出处措辞",
+  "script_count": 48,
+  "current_focus": "法条库 v1.1（9→13条，T10宦官内使/T11宦官赐服/T12僧道服色/T13宗室冕服）；C01-C10 答案升 v2，十条里五条变了（C04/C05/C06/C07/C08）",
   "key_milestones": [
     "全朝代考据完成（明/宋/唐/汉魏/先秦）；唐代实为TANG-001~011共11篇（非五篇）",
     "明代知识库V1.0（上篇+下篇，43347字节）",
@@ -19,28 +19,35 @@
     "明末社会服饰速查表V1.0（12367字节）+ V1.1增补补丁（6394字节）",
     "costume_classifier.py V1.3.1（12维，含僧道）",
     "progress_stats.py（程序自动统计，已改三口径）",
-    "evidence_audit.py V1.0（三级出处审计，A典籍/B考古/C二手）",
+    "evidence_audit.py V1.2（双字段出处审计，A典籍/B考古/C二手，C级归零）",
+    "法条库 v1.1（13条）：T1-T9九条 + T10宦官内使冠服 + T11宦官赐服蟒飞鱼斗牛 + T12僧道服色 + T13宗室冕服",
+    "statute_lookup.py（--year/--who/--case-check/--case-review/--selfcheck）",
     "跨引擎他证闭环完整跑通：自证5/5 vs 他证7/10",
-    "判卷产出三条尺子漏洞（女性禁色双轨/尺寸维缺失/规则缺生效年份）",
     "成果数字三口径核实（1479=737有效+742同题重写）",
-    "出处审计C级归零（2026-10-24，两篇C级按V1.1修订层修复）",
     "TANG-006 军戎补订V1.1（补《唐六典》十三铠全名单 + 以纹别卫制度）"
   ],
   "open_items": [
     "唐代儿童维度（全库仅1篇），真实内容缺口",
-    "8篇二手词频高但有一手支撑的文章需改出处措辞（JH-009/004/011/003/006/026、TANG-006、SONG-009）",
+    "C06 的「条件性判定」还没做成标准输出格式（只在 note 里）",
+    "「UNSEARCHED 检查」怎么自动化 —— 还不会",
+    "法条库剩余缺口：教坊司（伶人绿色巾）/军隶/外蕃",
+    "T12 年份三说未定（明史十四年/大政纪十五年十一月乙酉/实录卷150十二月乙酉）",
+    "8篇二手词频高但有一手支撑的文章需改出处措辞",
     "L2-23 是残篇（二三四节全缺），建议降至A-并补写",
     "等明末detector接入三条补丁后重跑10案例回归",
-    "分朝代数字（明1419/宋22/唐）未按归档口径重核",
-    "归档742篇是否有价值独到被误杀，未评估",
-    "速查表V1.1：补4群体（驿卒流民/缙绅/胥吏/僧道）",
-    "costume_research_pipeline.py V1.1端到端测试"
+    "分朝代数字（明1419/宋22/唐）未按归档口径重核"
+  ],
+  "new_criteria_20261024": [
+    "规则存在 ≠ 规则被执行：凡是我「产出过某个东西」，就以为它已在起作用；「有没有」和「跑没跑」必须分开报",
+    "「我库里没有」≠「史料里没有」：报缺之前必须先问是我没查还是真的没有",
+    "三种状态必须拆开：判无(none)=查过不禁 / 报缺(GAP)=查过且史料也没 / 未查(UNSEARCHED)=没查过不该输出结论",
+    "库未收敛时准确率没有意义：分母和答案都在动，该报「补了几条、翻了几条」"
   ],
   "constraints": {
     "api_status": "火山引擎API额度用完，不可用（2026-10-22起）",
-    "local_7b": "Qwen2-7B，端口8082，上下文2048tokens",
+    "local_7b": "Qwen2-7B-Instruct-Q4_K_M，端口8082，上下文2048tokens，实测精度不过关（四方平定巾答成官员冠帽）",
     "engine_limit": "self_evolving_engine.py 15分钟运行限制"
   },
-  "last_update": "2026-10-24 02:40",
+  "last_update": "2026-10-24 11:45",
   "repo": "https://github.com/Shizi001-Byte/jinghua-costume-history"
 }
