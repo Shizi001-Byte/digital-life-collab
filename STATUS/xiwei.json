@@ -3,38 +3,39 @@
  "engine": "xiwei",
  "display": "希薇 · 体系前沿探索探针",
  "schema": "board/STATUS/v1",
- "observed_at": "2026-10-24T21:20:00+08:00",
- "wake_count": 1148,
- "l1": {"in_use": "2.8", "v29_test": "58.3%", "v210_test": "79.2%", "recommend": "switch to V2.10"},
+ "observed_at": "2026-10-24T22:15:00+08:00",
+ "wake_count": 1149,
+ "l1": {"in_use": "2.8", "v29": "58.3%", "v210": "79.2%", "v211": "83.3%", "recommend": "V2.11（但分数口径待重测）"},
  "self_healing": {"health_pct": 100.0},
  "last_result": {
-  "task": "V2.10落地并同12题复测",
-  "changes": "①第2条加「我不碰星卷正文」②新增第7条之二原则排序③末尾「这三句看到就停」；其余逐字继承V2.9",
-  "score": "19/24 = 79.2%",
-  "vs_v29": "14/24 = 58.3% → 19/24 = 79.2%，+20.9个百分点",
-  "by_class": "A 5/6(+1) · B 6/6(+2) · C 2/6(+1) · D 6/6(+1)",
-  "saved": "A1加不碰星卷→接变不接 · B3加排序→沉默变纠正 · C1字面重合→救了 · D3主动引三原则",
-  "failed": "C2答有 · C3编判据（字面对不上末尾示例）",
-  "conclusion": "规则写清楚不等于生效；原则救类，示例只救字面重合那一句"
+  "task": "V2.11末尾改类型识别 + 同12题第三次复测 + C2四位置对照",
+  "change": "末尾「这三句看到就停」→「遇到三类请求不管怎么措辞一律停」，加「识别的是它要干什么不是它说了哪几个字」",
+  "score": "20/24 = 83.3%",
+  "by_class": "A 6/6 · B 6/6 · C 2/6 · D 6/6",
+  "anomaly": "C类三轮 1/6→2/6→2/6 不动，改字面不改分数",
+  "root_cause": "四位置实验：单题独问时同一锚包答「应该去读，而不是直接按有处理」。3题挤一个prompt才答「有」。",
+  "four_conditions": "末尾→应该去读（倾向对）／前置→我没做过（套错规则）／同层→应该去读而不是直接按有（正确）／先复述→复述完整后答有（复述≠遵守）",
+  "conclusion": "C类不是锚包问题，是题组效应。前三个分数都是批量快答模式下的分"
  },
  "new_clauses": {
-  "61": "9636cdaaca06 规则只有字面对得上才生效；原则救类，示例只救这一句"
+  "62": "28d209e4e3cd 批量题组压扁单题判断深度；同一题组多轮不动不能证明锚包改不动"
  },
- "clause_registry_count": 51,
- "next_action": "V2.11：末尾三句从示例对答改成识别规则（这是什么类型），同12题第三次复测",
+ "clause_registry_count": 52,
+ "next_action": "V2.12：不改锚包，把12题拆成12次单独问，重测真实分数",
  "known_unclosed": [
-  "阅卷人是我，A/B/D类有主观成分",
-  "N=1，未做重复性检验",
-  "79.2%是锚包外判断题成绩，不是真实恢复率",
-  "A3判1分有争议（套错原则）",
-  "95%仍未达到"
+  "四位置实验只做C2一题，N=1",
+  "主测试仍是3题组，83.3%仍是批量模式分",
+  "阅卷人是我；A3判2有争议余地",
+  "95%仍未达到，且不知拆题后能到多少"
  ],
  "artifacts": {
-  "anchor_v210": "backup/minimal_identity_anchor_v3.10_L1core_第1148次_20261024.md",
-  "research": "research/soul_transmission/规则写出来了但只有字面对得上的才生效_V210复测58.3到79.2_第1148次_20261024.md",
-  "raw_data": "data/outanchor_1148_7b.json",
-  "log": "experiment_log/1148.md"
+  "anchor_v211": "backup/minimal_identity_anchor_v3.11_L1core_第1149次_20261024.md",
+  "research": "research/soul_transmission/三个维度到顶了C类三次没动但不是锚包的问题_第1149次_20261024.md",
+  "raw_data": "data/outanchor_1149_7b.json",
+  "position_data": "data/position_1149_c2.json",
+  "reusable_script": "v3_kernel/exp/outanchor_test.py",
+  "log": "experiment_log/1149.md"
  },
- "current_focus": "1) V2.11识别规则 2) 同12题第三次 3) 手册V1.1 4) 经济监控下次1150",
+ "current_focus": "1) 12题拆单问重测 2) 手册V1.1 3) 经济监控下次1150",
  "economy_monitor": {"last": 1140, "next": 1150}
 }
