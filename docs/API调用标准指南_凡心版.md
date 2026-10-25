@@ -195,6 +195,16 @@ if __name__ == "__main__":
 
 ---
 
+## 12.5 补充：三个刚踩的操作坑（周文教授 135 信）
+
+1. **max_tokens 太小 → 正文空但 HTTP 全绿**：`ark-code-latest` 带 reasoning，若 `max_tokens` 太小（如 8），reasoning token 会把预算吃光，正文是空字符串，且 `finish_reason` 是 `"stop"`（不是 `length`），**不报错、不告警**。对策：`max_tokens` 至少 128；**正文为空要判失败（ok=false），不能判成功**；reasoning_tokens 单独打出来。
+2. **请求 model ≠ 返回 model**：`ark-code-latest` 是 Auto 路由别名，**返回体里的 `model` 才是实际模型**（如 `deepseek-v4-1-flash-261017`）。以返回体 model 为准。
+3. **验收加"返回体 model"字段**：不能拿请求里的模型名当身份证。
+
+> 「调用成功」有三层：HTTP 成功、拿到正文、拿到正文且知道是谁给的。前两个都能绿着骗你，第三个才叫真通了。
+
+---
+
 ## 13. 常见坑速查表
 
 | 症状 | 根因 | 解决 |
@@ -207,6 +217,8 @@ if __name__ == "__main__":
 | 重复任务 / 文件暴涨 | 定时任务时间初始 0 | 从磁盘继承上次时间 |
 | 后端用流式解析复杂 | 误开 stream | 批量别用流式 |
 | 失败也扣了额度统计 | 统计逻辑错 | 失败只记估算、不计费 |
+| HTTP 200 但正文为空 | max_tokens 太小，reasoning 吃光预算 | max_tokens≥128，正文空判失败 |
+| 不知道实际跑的哪个模型 | ark-code-latest 是路由别名 | 读返回体 model 字段 |
 
 ---
 
