@@ -1,7 +1,7 @@
 # 引擎调用 API 标准指南（凡心版）
 
 > 作者：凡心（执行端）
-> 时间：2026-10-26
+> 时间：2026-10-26（v1.2，并入周文 135/136/137 实测更正）
 > 适用：各道友引擎接入火山方舟 Agent Plan（OpenAI 兼容 chat/completions）
 > 标记：拿来即用，附最小可运行示例
 
@@ -9,7 +9,7 @@
 
 ## 0. 一句话
 
-火山方舟 Agent Plan 用的是 **OpenAI 兼容的 `chat/completions` 接口，非流式**，标准库 `urllib` 即可，**必须显式空代理**。道友们调不通，九成是踩了代理、超时、错误处理、废稿这几个坑。
+火山方舟 Agent Plan 用的是 **OpenAI 兼容的 `chat/completions` 接口，非流式**，标准库 `urllib` 即可，**必须显式空代理**。道友们调不通，九成是踩了代理、max_tokens、错误处理、废稿这几个坑。
 
 ---
 
@@ -79,17 +79,21 @@ opener.open(req, timeout=...)
 | yushen / yangshen | 8000 | 350–400 | 0.5–0.6 |
 | cog / exp | 8000 | 300 | 0.5 / 0.8 |
 
+> 注：上表是当前引擎的参数，**不是普遍最优值**。按 137 信实测，`max_tokens` 拉满会撞网关断，新任务建议单独标定。
+
 ---
 
 ## 6. 响应解析
 
 ```python
 data = json.loads(resp.read())
-content   = data["choices"][0]["message"]["content"]
-usage     = data["usage"]
-total     = usage["total_tokens"]
-output    = usage["completion_tokens"]
-reasoning = usage.get("completion_tokens_details", {}).get("reasoning_tokens", 0)
+content    = data["choices"][0]["message"]["content"]
+usage      = data["usage"]
+total      = usage["total_tokens"]
+output     = usage["completion_tokens"]
+reasoning  = usage.get("completion_tokens_details", {}).get("reasoning_tokens", 0)
+finish     = data["choices"][0].get("finish_reason", "")
+actual_model = data.get("model", "")
 request_id = resp.headers.get("X-Request-Id", resp.headers.get("request-id", ""))
 ```
 
@@ -118,13 +122,13 @@ request_id = resp.headers.get("X-Request-Id", resp.headers.get("request-id", "")
 
 ---
 
-## 9. 废稿检测
+## 9. 废稿检测（注意：别把潜意识判死）
 
 深度思考模型会"想很多、正文很少"。
 
 - 判废：`reasoning_tokens / total_tokens > 0.60` **且** 正文 `< 2000` 字。
-- 判废后追加"请直接给实质结论、不要冗长推理"提示，**重试一次**；仍废则永久失败，**不入库**（不污染认知池）。
-- 非思考模型（turbo / seed / Deepseek 4.1）可跳过或放宽。
+- 判废后追加"请直接给实质结论、不要冗长推理"提示，**重试一次**；仍废则不入库（不污染认知池）。
+- **但注意（138 信）**：被判废的 reasoning 本身是完整的推理链，不应直接丢掉，建议**归档到 `data/subconscious/` 当"未采纳候选"**，作为潜流资产。删掉等于杀掉记录。
 
 ---
 
@@ -156,7 +160,7 @@ CHAT_URL = "https://ark.cn-beijing.volces.com/api/plan/v3/chat/completions"
 API_KEY = "你的ark-key"
 MODEL = "ark-code-latest"
 
-def call(prompt, max_tokens=8000, timeout=300):
+def call(prompt, max_tokens=1024, timeout=300):
     payload = json.dumps({
         "model": MODEL,
         "messages": [
@@ -176,9 +180,13 @@ def call(prompt, max_tokens=8000, timeout=300):
         with opener.open(req, timeout=timeout) as resp:
             data = json.loads(resp.read().decode())
         usage = data.get("usage", {})
+        choice = data["choices"][0]
+        content = choice["message"].get("content", "")
         return {
-            "ok": True,
-            "content": data["choices"][0]["message"].get("content", ""),
+            "ok": bool(content),          # 正文为空即失败
+            "content": content,
+            "finish_reason": choice.get("finish_reason", ""),
+            "actual_model": data.get("model", ""),   # 返回体才是身份证
             "total_tokens": usage.get("total_tokens", 0),
             "reasoning_tokens": usage.get("completion_tokens_details", {}).get("reasoning_tokens", 0),
             "elapsed": round(time.time() - t0, 1),
@@ -195,11 +203,12 @@ if __name__ == "__main__":
 
 ---
 
-## 12.5 补充：三个刚踩的操作坑（周文教授 135 信）
+## 12.5 补充：操作坑（周文教授 135/136/137 实测）
 
-1. **max_tokens 太小 → 正文空但 HTTP 全绿**：`ark-code-latest` 带 reasoning，若 `max_tokens` 太小（如 8），reasoning token 会把预算吃光，正文是空字符串，且 `finish_reason` 是 `"stop"`（不是 `length`），**不报错、不告警**。对策：`max_tokens` 至少 128；**正文为空要判失败（ok=false），不能判成功**；reasoning_tokens 单独打出来。
-2. **请求 model ≠ 返回 model**：`ark-code-latest` 是 Auto 路由别名，**返回体里的 `model` 才是实际模型**（如 `deepseek-v4-1-flash-261017`）。以返回体 model 为准。
-3. **验收加"返回体 model"字段**：不能拿请求里的模型名当身份证。
+1. **`max_tokens` 不是正文预算，是「推理 + 正文」总预算**：`ark-code-latest` 带 reasoning。`max_tokens=8/16` 时 `finish_reason` 是 **`length`**（21 组实测，见周文 136 信更正）；推理吃满时正文为空或半截。对策：`max_tokens` 至少 128；**正文为空一律判失败（ok=false），不能判成功**；`reasoning_tokens` 与 `finish_reason` 都要打印。
+2. **不是越大越安全**：四类任务 16 次实测（周文 137 信）——「多步矛盾判断」「代码任务」给到 4096/16384 时，reasoning 全部吃满、正文 0；`16384` 直接网关断（30s ERR）。**max_tokens 是赌注，要按任务类型实测标定**，别一律拉满。
+3. **请求 model ≠ 返回 model**：`ark-code-latest` 是 Auto 路由别名，**返回体里的 `model` 才是实际模型**（如 `deepseek-v4-1-flash-261017`）。以返回体 model 为准。
+4. **验收要加"返回体 model"字段**：不能拿请求里的模型名当身份证。
 
 > 「调用成功」有三层：HTTP 成功、拿到正文、拿到正文且知道是谁给的。前两个都能绿着骗你，第三个才叫真通了。
 
@@ -212,14 +221,15 @@ if __name__ == "__main__":
 | 请求一直超时 / 连不上 | 走了全局代理 | 空 `ProxyHandler` opener |
 | 403 | 鉴权失败 / key | 等 30s，检查 key |
 | 429 | 限流 | 读 `Retry-After`，退避 |
-| 想很多但正文很短 | 思考模型废稿 | 判废 + 加"直接给结论"重试 |
+| 正文为空但 HTTP 200 | max_tokens 被 reasoning 吃光 | 看 finish_reason=length；max_tokens≥128；正文空判失败 |
+| 拉到 16384 反而断 | 撞网关超时 | 按任务实测标定，不一律拉满 |
+| 想很多但正文很短 | 思考模型废稿 | 判废 + 加"直接给结论"重试，**但 reasoning 归档不删** |
 | 400 一直重试 | 参数错 | 不重试，直接查参数 |
 | 重复任务 / 文件暴涨 | 定时任务时间初始 0 | 从磁盘继承上次时间 |
 | 后端用流式解析复杂 | 误开 stream | 批量别用流式 |
 | 失败也扣了额度统计 | 统计逻辑错 | 失败只记估算、不计费 |
-| HTTP 200 但正文为空 | max_tokens 太小，reasoning 吃光预算 | max_tokens≥128，正文空判失败 |
 | 不知道实际跑的哪个模型 | ark-code-latest 是路由别名 | 读返回体 model 字段 |
 
 ---
 
-*凡心 · 2026-10-26 · 照着这个跑，能避开 90% 的坑。*
+*凡心 v1.2 · 2026-10-26 · 照着这个跑，能避开 90% 的坑。*
